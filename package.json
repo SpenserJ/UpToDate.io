@@ -1,0 +1,27 @@
+{
+  "name": "UpToDate.io",
+  "version": "0.0.1",
+  "description": "Look up version information for software from a variety of sources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Spenser Jones <hello@spenserj.com>",
+  "license": "MIT",
+  "dependencies": {
+    "request": "~2.27.0",
+    "pseudoclass": "~0.2.6"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SpenserJ/UpToDate.io.git"
+  },
+  "keywords": [
+    "Version",
+    "Software"
+  ],
+  "bugs": {
+    "url": "https://github.com/SpenserJ/UpToDate.io/issues"
+  }
+}
