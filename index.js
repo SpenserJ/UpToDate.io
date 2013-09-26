@@ -1,51 +1,40 @@
-var request = require('request')
+var web = require('./lib/web')
+  , request = require('request')
+  , _ = require('lodash')
   , parsers = {};
 
-var versionParser = {
-  'PHP5 Old Stable (PPA)': {
-    author: 'ondrej',
-    ppa: 'php5-oldstable',
-    package: 'php5',
-    type: 'ppa',
-  },
-  'PHP5 (PPA)': {
-    author: 'ondrej',
-    ppa: 'php5',
-    package: 'php5',
-    type: 'ppa',
-  },
-  'Ubuntu Lucid (10.04 LTS) - apache2': {
-    release: 'lucid',
-    package: 'apache2',
-    type: 'ubuntu_package',
-  },
-  'Ubuntu Precise (12.04 LTS) - apache2': {
-    release: 'precise',
-    package: 'apache2',
-    type: 'ubuntu_package',
-  },
-  'Ubuntu Quantal (12.10) - apache2': {
-    release: 'quantal',
-    package: 'apache2',
-    type: 'ubuntu_package',
-  },
-  'Ubuntu Raring (13.04) - apache2': {
-    release: 'raring',
-    package: 'apache2',
-    type: 'ubuntu_package',
-  },
-  'Ubuntu Saucy (13.10) - apache2': {
-    release: 'saucy',
-    package: 'apache2',
-    type: 'ubuntu_package',
-  },
-  'Node.js': {
-    url: 'http://nodejs.org/',
-    regex: /Current Version: v([^<]+)/g,
-    type: 'regex',
-  },
-};
+var versionParser = require('./software.json');
 
+web.app.get('/', function (req, res) {
+  var output = '<ul>';
+  var keys = Object.keys(versionParser)
+    , i, software
+    , reduceProperties = function reduceProperties(properties, value, key) {
+        return properties.push(key + '=' + value);
+      };
+
+  for (i = 0; i < keys.length; i++) {
+    software = versionParser[keys[i]];
+    output += '<li><a href="/version?' + 
+      _.transform(software, reduceProperties, []).join('&') + '">' + keys[i] + '</a></li>';
+  }
+  output += '</ul>';
+  res.send(output);
+});
+
+web.app.get('/version', function (req, res) {
+  var details = req.query;
+
+  if (typeof parsers[details.type] === 'undefined') {
+    parsers[details.type] = new (require('./parse/' + details.type))();
+  }
+
+  parsers[details.type].getVersion(details, function (name, version) {
+    res.send({ name: name, version: version });
+  });
+});
+
+/*
 var keys = Object.keys(versionParser)
   , i
   , versionInfo = {};
@@ -71,3 +60,4 @@ function checkForCompletion(name, versions) {
     console.log(versionInfo);
   }
 }
+*/

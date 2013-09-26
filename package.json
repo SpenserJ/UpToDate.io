@@ -4,13 +4,20 @@
   "description": "Look up version information for software from a variety of sources",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Spenser Jones <hello@spenserj.com>",
   "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  },
   "dependencies": {
     "request": "~2.27.0",
-    "pseudoclass": "~0.2.6"
+    "pseudoclass": "~0.2.6",
+    "express": "~3.4.0",
+    "socket.io": "~0.9.16",
+    "lodash": "~2.1.0"
   },
   "devDependencies": {},
   "repository": {
@@ -23,5 +30,6 @@
   ],
   "bugs": {
     "url": "https://github.com/SpenserJ/UpToDate.io/issues"
-  }
+  },
+  "subdomain": "uptodate-io"
 }

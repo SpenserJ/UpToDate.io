@@ -1,16 +1,18 @@
 var Class = require('pseudoclass')
-  , Request = require('request');
+  , Request = require('request')
+  , _ = require('lodash');
 
 var ParseRegex = Class({
-  initialize: function initialize() {},
-
-  getVersion: function getVersion(settings, callback) {
-    var self = this;
-    if (typeof settings === 'function') {
-      callback = settings;
-      settings = {};
+  initialize: function initialize(settings) {
+    if (typeof settings.regex !== 'RegExp') {
+      settings.regex = new RegExp(settings.regex, 'g');
     }
-    settings = settings || {};
+  },
+
+  getVersion: function getVersion(settingsOriginal, callback) {
+    var self = this
+      , settings = _.cloneDeep(settingsOriginal);
+
     self.initialize(settings);
 
     Request(settings.url, function (err, res, body) {
