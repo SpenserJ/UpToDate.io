@@ -10,7 +10,7 @@ web.app.get('/', function (req, res) {
   var keys = Object.keys(versionParser)
     , i, software
     , reduceProperties = function reduceProperties(properties, value, key) {
-        return properties.push(key + '=' + value);
+        return properties.push(escape(key) + '=' + escape(value).replace(/\+/g, '%2B'));
       };
 
   for (i = 0; i < keys.length; i++) {
@@ -23,7 +23,11 @@ web.app.get('/', function (req, res) {
 });
 
 web.app.get('/version', function (req, res) {
-  var details = req.query;
+  var details = {};
+  _.each(req.query, function(value, key) {
+    details[unescape(key)] = unescape(value);
+  });
+  console.log(details);
 
   if (typeof parsers[details.type] === 'undefined') {
     parsers[details.type] = new (require('./parse/' + details.type))();
@@ -33,31 +37,3 @@ web.app.get('/version', function (req, res) {
     res.send({ name: name, version: version });
   });
 });
-
-/*
-var keys = Object.keys(versionParser)
-  , i
-  , versionInfo = {};
-
-for (i = 0; i < keys.length; i++) {
-  var name = keys[i];
-  getVersion(name, versionParser[name]);
-}
-
-function getVersion(name, details) {
-  console.log('Checking ' + name);
-  details.name = name;
-  if (typeof parsers[details.type] === 'undefined') {
-    parsers[details.type] = new (require('./parse/' + details.type))();
-  }
-
-  parsers[details.type].getVersion(details, checkForCompletion);
-}
-
-function checkForCompletion(name, versions) {
-  versionInfo[name] = versions;
-  if (Object.keys(versionInfo).length === Object.keys(versionParser).length) {
-    console.log(versionInfo);
-  }
-}
-*/
