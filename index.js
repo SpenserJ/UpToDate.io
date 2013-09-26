@@ -14,23 +14,26 @@ var versionParser = {
     package: 'php5',
     type: 'ppa',
   },
-  /*
   'Ubuntu Lucid (10.04 LTS) - apache2': {
-    url: 'http://packages.ubuntu.com/lucid/apache2',
-    regex: /Package: apache2 \(([^)]+)\)/g,
+    release: 'lucid',
+    package: 'apache2',
+    type: 'ubuntu_package',
   },
   'Ubuntu Precise (12.04 LTS) - apache2': {
-    url: 'http://packages.ubuntu.com/precise/apache2',
-    regex: /Package: apache2 \(([^)]+)\)/g,
+    release: 'precise',
+    package: 'apache2',
+    type: 'ubuntu_package',
   },
   'Ubuntu Quantal (12.10) - apache2': {
-    url: 'http://packages.ubuntu.com/quantal/apache2',
-    regex: /Package: apache2 \(([^)]+)\)/g,
+    release: 'quantal',
+    package: 'apache2',
+    type: 'ubuntu_package',
   },
   'Ubuntu Raring (13.04) - apache2': {
-    url: 'http://packages.ubuntu.com/raring/apache2',
-    regex: /Package: apache2 \(([^)]+)\)/g,
-  },*/
+    release: 'raring',
+    package: 'apache2',
+    type: 'ubuntu_package',
+  },
   'Ubuntu Saucy (13.10) - apache2': {
     release: 'saucy',
     package: 'apache2',
